@@ -18,6 +18,8 @@ export type Product = {
 	stock: number;
 	status: 'Active' | 'Draft' | 'Archived';
 	sales: number;
+	image: string;
+	description: string;
 };
 
 export type Customer = {
@@ -76,6 +78,13 @@ export function generateProducts(n = 40): Product[] {
 	const r = rng(99);
 	const cats = ['License', 'Subscription', 'Add-on', 'Bundle'];
 	const statuses: Product['status'][] = ['Active', 'Active', 'Active', 'Draft', 'Archived'];
+	const imgSeeds = ['dashboard', 'chart', 'analytics', 'cloud', 'code', 'design', 'mobile'];
+	const descs = [
+		'<p>Full access to all premium features with priority support and regular updates.</p><ul><li>Unlimited projects</li><li>Priority support</li><li>Free updates for 1 year</li></ul>',
+		'<p>Enterprise-grade license with team collaboration features and advanced analytics.</p><blockquote>Best value for growing teams.</blockquote>',
+		'<p>Add powerful analytics capabilities to your existing setup.</p><ul><li>Real-time dashboards</li><li>Custom reports</li><li>Data export</li></ul>',
+		'<p>Complete white-label solution for agencies and resellers.</p><p>Includes full source code and branding options.</p>',
+	];
 	return PRODUCTS.flatMap((name, pi) =>
 		Array.from({ length: Math.ceil(n / PRODUCTS.length) }, (_, i) => ({
 			id: `PRD-${(pi + 1) * 100 + i}`,
@@ -84,7 +93,9 @@ export function generateProducts(n = 40): Product[] {
 			price: [299, 1499, 599, 79, 99, 49, 1999][pi],
 			stock: Math.floor(r() * 500) + 50,
 			status: statuses[Math.floor(r() * statuses.length)],
-			sales: Math.floor(r() * 300) + 10
+			sales: Math.floor(r() * 300) + 10,
+			image: `https://api.dicebear.com/7.x/shapes/svg?seed=${imgSeeds[pi % imgSeeds.length]}-${i}&backgroundColor=10b981,3b82f6,8b5cf6,f59e0b,ec4899`,
+			description: descs[pi % descs.length]
 		}))
 	).slice(0, n);
 }
