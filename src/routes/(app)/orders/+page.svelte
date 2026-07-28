@@ -137,7 +137,7 @@
 						return start + i;
 					}) as p}
 						<Button
-							variant={p === page ? 'default' : 'ghost'}
+							variant={p === page ? 'primary' : 'ghost'}
 							size="sm"
 							onclick={() => (page = p)}
 						>{p}</Button>

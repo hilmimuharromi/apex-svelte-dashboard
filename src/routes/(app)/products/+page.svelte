@@ -112,7 +112,7 @@
 				<div class="flex gap-1">
 					<Button variant="outline" size="sm" onclick={() => (page = Math.max(1, page - 1))} disabled={page === 1}>Prev</Button>
 					{#each Array.from({ length: Math.min(5, totalPages) }, (_, i) => Math.max(1, Math.min(page - 2, totalPages - 4)) + i) as p}
-						<Button variant={p === page ? 'default' : 'ghost'} size="sm" onclick={() => (page = p)}>{p}</Button>
+						<Button variant={p === page ? 'primary' : 'ghost'} size="sm" onclick={() => (page = p)}>{p}</Button>
 					{/each}
 					<Button variant="outline" size="sm" onclick={() => (page = Math.min(totalPages, page + 1))} disabled={page === totalPages}>Next</Button>
 				</div>
