@@ -16,7 +16,7 @@
 
 <aside
 	class={cn(
-		'flex h-screen flex-col bg-sidebar text-sidebar-foreground transition-[width] duration-200',
+		'sticky top-0 flex h-screen shrink-0 flex-col bg-sidebar text-sidebar-foreground transition-[width] duration-200',
 		collapsed ? 'w-[72px]' : 'w-[260px]'
 	)}
 >

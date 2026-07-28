@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { Search, Bell, Sun, Moon, Palette, Plus } from '@lucide/svelte';
 	import { APP_CONFIG } from '$lib/config';
-	import { cn } from '$lib/utils';
 
 	let { onOpenPalette, onToggleTheme, onOpenCustomizer } = $props<{
 		onOpenPalette?: () => void;
@@ -18,7 +17,7 @@
 	}
 </script>
 
-<header class="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-border bg-card px-6">
+<header class="sticky top-0 z-30 flex h-16 shrink-0 items-center gap-3 border-b border-border bg-card px-6">
 	<!-- Search trigger -->
 	<button
 		onclick={() => onOpenPalette?.()}
