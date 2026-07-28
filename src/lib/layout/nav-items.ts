@@ -22,7 +22,8 @@ import {
 	Bell,
 	Settings,
 	LifeBuoy,
-	BookOpen
+	BookOpen,
+	Blocks
 } from '@lucide/svelte';
 
 export type NavItem = {
@@ -46,7 +47,8 @@ export const NAV_GROUPS: NavGroup[] = [
 			{ label: 'eCommerce', href: '/ecommerce', icon: ShoppingBag },
 			{ label: 'CRM', href: '/crm', icon: Users },
 			{ label: 'SaaS', href: '/saas', icon: Sparkles },
-			{ label: 'Charts', href: '/charts', icon: LineChart }
+			{ label: 'Charts', href: '/charts', icon: LineChart },
+			{ label: 'Components', href: '/components', icon: Blocks }
 		]
 	},
 	{
