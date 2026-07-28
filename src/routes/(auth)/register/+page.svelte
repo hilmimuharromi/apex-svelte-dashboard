@@ -1,11 +1,14 @@
 <script lang="ts">
-	import { Button, Input, Label, Checkbox, Card } from '$lib/ui';
+	import { Button, Input, Label, Card } from '$lib/ui';
 	import { APP_CONFIG } from '$lib/config';
 	import { enhance } from '$app/forms';
 
-	let email = $state('admin@apex.dev');
-	let password = $state('');
-	let remember = $state(true);
+	let form = $state({
+		name: '',
+		email: '',
+		password: '',
+		confirmPassword: ''
+	});
 	let loading = $state(false);
 	let errors = $state<Record<string, string>>({});
 
@@ -26,7 +29,7 @@
 		</div>
 	</div>
 
-	<Card title="Welcome back" description="Sign in to continue to your dashboard">
+	<Card title="Create account" description="Get started with your free account">
 		<form method="POST" use:enhance={() => {
 			loading = true;
 			errors = {};
@@ -42,32 +45,36 @@
 			{/if}
 
 			<div class="space-y-1.5">
+				<Label for="name">Full name</Label>
+				<Input id="name" name="name" type="text" bind:value={form.name} placeholder="John Doe" required />
+				{#if errors.name}<p class="text-xs text-destructive">{errors.name}</p>{/if}
+			</div>
+
+			<div class="space-y-1.5">
 				<Label for="email">Email</Label>
-				<Input id="email" name="email" type="email" bind:value={email} placeholder="you@example.com" required />
+				<Input id="email" name="email" type="email" bind:value={form.email} placeholder="you@example.com" required />
 				{#if errors.email}<p class="text-xs text-destructive">{errors.email}</p>{/if}
 			</div>
 
 			<div class="space-y-1.5">
-				<div class="flex items-center justify-between">
-					<Label for="password">Password</Label>
-					<a href="/forgot-password" class="text-xs text-primary hover:underline">Forgot?</a>
-				</div>
-				<Input id="password" name="password" type="password" bind:value={password} placeholder="••••••••" required />
+				<Label for="password">Password</Label>
+				<Input id="password" name="password" type="password" bind:value={form.password} placeholder="••••••••" required />
 				{#if errors.password}<p class="text-xs text-destructive">{errors.password}</p>{/if}
 			</div>
 
-			<label class="flex items-center gap-2 text-sm">
-				<Checkbox bind:checked={remember} />
-				<span>Remember me for 30 days</span>
-			</label>
+			<div class="space-y-1.5">
+				<Label for="confirmPassword">Confirm password</Label>
+				<Input id="confirmPassword" name="confirmPassword" type="password" bind:value={form.confirmPassword} placeholder="••••••••" required />
+				{#if errors.confirmPassword}<p class="text-xs text-destructive">{errors.confirmPassword}</p>{/if}
+			</div>
 
 			<Button class="w-full" disabled={loading}>
-				{loading ? 'Signing in...' : 'Sign in'}
+				{loading ? 'Creating account...' : 'Create account'}
 			</Button>
 		</form>
 		<div class="mt-4 text-center text-sm text-muted-foreground">
-			Don't have an account?
-			<a href="/register" class="text-primary hover:underline">Sign up</a>
+			Already have an account?
+			<a href="/login" class="text-primary hover:underline">Sign in</a>
 		</div>
 	</Card>
 </div>

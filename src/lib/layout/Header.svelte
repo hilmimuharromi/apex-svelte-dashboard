@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { Search, Bell, Sun, Moon, Palette, Plus, CreditCard, User, Settings } from '@lucide/svelte';
-	import { APP_CONFIG } from '$lib/config';
+	import { Search, Bell, Sun, Moon, Palette, Plus, CreditCard, User, Settings, LogOut } from '@lucide/svelte';
+	import { page } from '$app/state';
 	import { Modal, Button, Input, Select, Label, Badge } from '$lib/ui';
 	import { toast } from '$lib/stores/toast.svelte';
 
@@ -9,6 +9,22 @@
 		onToggleTheme: () => void;
 		onOpenCustomizer: () => void;
 	}>();
+
+	// Get user from SSR layout data
+	const user = $derived(page.data.user);
+	let userMenuOpen = $state(false);
+
+	function initials(name: string) {
+		return name.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase();
+	}
+
+	function performLogout() {
+		const form = document.createElement('form');
+		form.method = 'POST';
+		form.action = '/logout';
+		document.body.appendChild(form);
+		form.submit();
+	}
 
 	let orderModal = $state(false);
 	let searchModal = $state(false);
@@ -57,10 +73,41 @@
 			<span class="absolute right-2.5 top-2.5 flex h-2 w-2 rounded-full bg-danger ring-2 ring-background"></span>
 		</Button>
 
-		<button class="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-primary font-semibold hover:bg-primary/20 transition-colors" aria-label="User menu">
-			{APP_CONFIG.brand.name[0]}S
+		<button
+			class="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-primary font-semibold hover:bg-primary/20 transition-colors"
+			aria-label="User menu"
+			onclick={() => (userMenuOpen = !userMenuOpen)}
+		>
+			{user ? initials(user.name) : '?'}
 		</button>
-	</div>
+		</div>
+
+		<!-- User dropdown -->
+		{#if userMenuOpen}
+		<div class="fixed inset-0 z-40" onclick={() => (userMenuOpen = false)}></div>
+		<div class="absolute right-4 top-14 z-50 w-64 rounded-xl border border-border bg-background shadow-lg p-2">
+			<div class="flex items-center gap-3 px-3 py-2.5 mb-1 border-b border-border">
+				<div class="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-primary font-semibold text-sm">
+					{user ? initials(user.name) : '?'}
+				</div>
+				<div class="min-w-0">
+					<p class="text-sm font-semibold truncate">{user?.name ?? 'Guest'}</p>
+					<p class="text-xs text-muted-foreground truncate">{user?.email ?? ''}</p>
+				</div>
+			</div>
+			<a href="/settings" class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm hover:bg-muted transition-colors" onclick={() => (userMenuOpen = false)}>
+				<Settings class="h-4 w-4 text-muted-foreground" />
+				Settings
+			</a>
+			<button
+				class="flex w-full items-center gap-3 px-3 py-2 rounded-lg text-sm text-destructive hover:bg-destructive/10 transition-colors"
+				onclick={performLogout}
+			>
+				<LogOut class="h-4 w-4" />
+				Log out
+			</button>
+		</div>
+		{/if}
 </header>
 
 <!-- Search Modal -->

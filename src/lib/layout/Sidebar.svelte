@@ -12,10 +12,12 @@
 	let logoutModal = $state(false);
 
 	function performLogout() {
-		logoutModal = false;
-		// Normally we'd clear tokens here, routing to login for demo:
-		toast.info('Logging out...', 'See you soon.');
-		setTimeout(() => { window.location.href = '/login'; }, 1000);
+		// POST to /logout — clears cookie server-side, redirects to /login
+		const form = document.createElement('form');
+		form.method = 'POST';
+		form.action = '/logout';
+		document.body.appendChild(form);
+		form.submit();
 	}
 </script>
 
