@@ -3,7 +3,7 @@
 		Button, Card, Input, Textarea, Label, FormField,
 		Checkbox, Switch, Select, Badge, StatusPill,
 		Avatar, StatCard, ProgressBar, Spinner, Skeleton,
-		EmptyState, Pagination, Modal, Toaster
+		EmptyState, Pagination, Modal, Toaster, Table
 	} from '$lib/ui';
 	import type { TableColumn } from '$lib/ui';
 	import { toast } from '$lib/stores/toast.svelte';
@@ -283,11 +283,7 @@ await clientApi.post('/orders', {
 	<section class="space-y-3">
 		<h2 class="text-lg font-semibold">Table</h2>
 		<p class="text-sm text-muted-foreground">Generic <code>&lt;T&gt;</code> table. Props: <code>columns</code>, <code>rows</code>, <code>onRowClick</code>. Column <code>cell</code> snippet for custom rendering.</p>
-		<Table {columns} rows={tableData} rowKey={(r) => r.id} onRowClick={(r) => toast.info('Clicked', r.name)}>
-			{#snippet cell(row)}
-				<StatusPill status={row.status} />
-			{/snippet}
-		</Table>
+		<Table {columns} rows={tableData} rowKey={(r) => r.id} onRowClick={(r) => toast.info('Clicked', r.name)} />
 		<pre class="text-xs bg-muted rounded-lg p-4 overflow-x-auto"><code>{code.table}</code></pre>
 	</section>
 
