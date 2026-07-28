@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Card, Avatar, Badge, Button, Switch } from '$lib/ui';
 	import { Bell, MessageSquare, Package, AlertCircle, CheckCircle, GitPullRequest, Users as UsersIcon, Settings as SettingsIcon } from '@lucide/svelte';
+	import { toast } from '$lib/stores/toast.svelte';
 	import type { Component } from 'svelte';
 
 	type NotifType = 'mention' | 'order' | 'alert' | 'success' | 'pr' | 'team';
@@ -61,7 +62,7 @@
 			<p class="mt-1 text-sm text-muted-foreground">Alerts, mentions, and activity</p>
 		</div>
 		{#if unreadCount > 0}
-			<Button variant="outline" onclick={markAllRead}>Mark all as read</Button>
+			<Button variant="outline" onclick={() => { markAllRead(); toast.success('All caught up', 'Marked all notifications as read.'); }}>Mark all as read</Button>
 		{/if}
 	</div>
 

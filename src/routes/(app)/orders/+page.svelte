@@ -2,6 +2,7 @@
 	import { money } from '$lib/utils';
 	import { ShoppingCart, DollarSign, CheckCircle, Clock } from '@lucide/svelte';
 	import { StatCard, Card, Avatar, StatusPill, Button, Input, Select } from '$lib/ui';
+	import { toast } from '$lib/stores/toast.svelte';
 	import { generateOrders, type Order } from '$lib/data/mock';
 
 	const ALL = generateOrders(80);

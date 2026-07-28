@@ -2,6 +2,7 @@
 	import { money } from '$lib/utils';
 	import { Receipt, DollarSign, Clock, AlertCircle } from '@lucide/svelte';
 	import { StatCard, Card, Badge, Button, Input, Select } from '$lib/ui';
+	import { toast } from '$lib/stores/toast.svelte';
 	import { generateInvoices, type Invoice } from '$lib/data/invoices';
 
 	const ALL = generateInvoices(30);
@@ -37,7 +38,7 @@
 			<h1 class="text-2xl font-semibold tracking-tight">Invoices</h1>
 			<p class="mt-1 text-sm text-muted-foreground">{ALL.length} total invoices</p>
 		</div>
-		<Button>New Invoice</Button>
+		<Button onclick={() => toast.success('New invoice', 'Invoice draft created.')}>New Invoice</Button>
 	</div>
 
 	<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">

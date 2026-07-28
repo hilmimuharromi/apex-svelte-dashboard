@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Card, Input, Button } from '$lib/ui';
 	import { Search, BookOpen, MessageCircle, FileQuestion, LifeBuoy, ArrowRight } from '@lucide/svelte';
+	import { toast } from '$lib/stores/toast.svelte';
 
 	const CATEGORIES = [
 		{ id: '1', title: 'Getting Started', icon: BookOpen, desc: 'Setup, installation, and initial configuration', articles: 12 },
@@ -73,8 +74,8 @@
 			<p class="text-sm text-muted-foreground mt-1">Our support team is available 24/7 to assist you.</p>
 		</div>
 		<div class="flex gap-3 w-full sm:w-auto shrink-0">
-			<Button variant="outline" class="w-full sm:w-auto">Open a ticket</Button>
-			<Button class="w-full sm:w-auto">Chat with us</Button>
+			<Button variant="outline" class="w-full sm:w-auto" onclick={() => toast.info('Ticket', 'Ticket form opened.')}>Open a ticket</Button>
+			<Button class="w-full sm:w-auto" onclick={() => toast.success('Live chat', 'Connecting you to an agent...')}>Chat with us</Button>
 		</div>
 	</Card>
 </div>

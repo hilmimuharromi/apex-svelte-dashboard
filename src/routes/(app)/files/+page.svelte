@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Card, Button, Input, Badge, Avatar } from '$lib/ui';
 	import { Folder, FileText, Image, Video, Music, Archive, Upload, Grid3x3, List, Search, MoreVertical, Star } from '@lucide/svelte';
+	import { toast } from '$lib/stores/toast.svelte';
 
 	type File = {
 		id: string;
@@ -45,7 +46,7 @@
 			<h1 class="text-2xl font-semibold tracking-tight">Files</h1>
 			<p class="mt-1 text-sm text-muted-foreground">{items.length} items in your workspace</p>
 		</div>
-		<Button><Upload class="h-4 w-4" /> Upload</Button>
+		<Button onclick={() => toast.info('Upload', 'Drag files here or click to browse.')}><Upload class="h-4 w-4" /> Upload</Button>
 	</div>
 
 	<div class="flex flex-wrap gap-3 items-center">

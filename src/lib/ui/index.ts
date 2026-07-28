@@ -21,3 +21,4 @@ export { default as Spinner } from './Spinner.svelte';
 
 export type { TableColumn } from './Table.svelte';
 export { default as Modal } from './Modal.svelte';
+export { default as Toaster } from './Toaster.svelte';

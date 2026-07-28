@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Card, Badge, Button, Avatar, Modal, Input, Label, Select, Textarea } from '$lib/ui';
+	import { toast } from '$lib/stores/toast.svelte';
 	let taskModal = $state(false);
 	import { Plus, MessageSquare, Paperclip } from '@lucide/svelte';
 
@@ -102,7 +103,7 @@
 		</div>
 		{#snippet footer()}
 			<Button variant="ghost" onclick={() => (taskModal = false)}>Cancel</Button>
-			<Button onclick={() => (taskModal = false)}>Create Task</Button>
+			<Button onclick={() => { taskModal = false; toast.success('Task created', 'New task added to the board.'); }}>Create Task</Button>
 		{/snippet}
 	</Modal>
 

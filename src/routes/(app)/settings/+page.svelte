@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Card, Input, Label, Textarea, Select, Switch, Button, FormField, Avatar, Badge } from '$lib/ui';
+	import { toast } from '$lib/stores/toast.svelte';
 	import { APP_CONFIG } from '$lib/config';
 
 	let name = $state(APP_CONFIG.user.name);
@@ -131,7 +132,7 @@
 
 			<Card title="Danger zone">
 				<p class="text-sm text-muted-foreground mb-4">Permanently delete your account and all data.</p>
-				<Button variant="danger" class="w-full">Delete account</Button>
+				<Button variant="danger" class="w-full" onclick={() => toast.danger('Account deletion requested', 'This action cannot be undone.')}>Delete account</Button>
 			</Card>
 		</div>
 	</div>

@@ -2,6 +2,7 @@
 	import { page } from '$app/state';
 	import { money } from '$lib/utils';
 	import { Printer, Download, Send, ArrowLeft } from '@lucide/svelte';
+	import { toast } from '$lib/stores/toast.svelte';
 	import { Card, Button, Badge } from '$lib/ui';
 	import { APP_CONFIG } from '$lib/config';
 	import { generateInvoices, type Invoice } from '$lib/data/invoices';
@@ -30,9 +31,9 @@
 				<ArrowLeft class="h-4 w-4" /> Back to invoices
 			</a>
 			<div class="flex gap-2">
-				<Button variant="outline" size="sm"><Send class="h-4 w-4" /> Send</Button>
-				<Button variant="outline" size="sm" onclick={() => window.print()}><Printer class="h-4 w-4" /> Print</Button>
-				<Button size="sm"><Download class="h-4 w-4" /> Download PDF</Button>
+				<Button variant="outline" size="sm" onclick={() => toast.success('Invoice sent', 'The invoice has been emailed to the client.')}><Send class="h-4 w-4" /> Send</Button>
+				<Button variant="outline" size="sm" onclick={() => { toast.info('Opening print dialog...'); setTimeout(() => window.print(), 500); }}><Printer class="h-4 w-4" /> Print</Button>
+				<Button size="sm" onclick={() => toast.info('Downloading...', 'Invoice PDF is being generated.')}><Download class="h-4 w-4" /> Download PDF</Button>
 			</div>
 		</div>
 

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Card, Button, Badge, Avatar } from '$lib/ui';
 	import { ChevronLeft, ChevronRight, Plus } from '@lucide/svelte';
+	import { toast } from '$lib/stores/toast.svelte';
 
 	type Event = {
 		id: string;
@@ -72,7 +73,7 @@
 			<h1 class="text-2xl font-semibold tracking-tight">Calendar</h1>
 			<p class="mt-1 text-sm text-muted-foreground">Team schedule and events</p>
 		</div>
-		<Button><Plus class="h-4 w-4" /> New Event</Button>
+		<Button onclick={() => toast.info('New event', 'Event editor coming soon.')}><Plus class="h-4 w-4" /> New Event</Button>
 	</div>
 
 	<div class="grid gap-6 lg:grid-cols-[1fr_320px]">

@@ -2,6 +2,7 @@
 	import { money } from '$lib/utils';
 	import { CreditCard, Check, Download, AlertCircle } from '@lucide/svelte';
 	import { Card, Button, Badge, ProgressBar } from '$lib/ui';
+	import { toast } from '$lib/stores/toast.svelte';
 
 	const PLANS = [
 		{ name: 'Starter', price: 0, features: ['1 workspace', '3 team members', 'Community support', '1GB storage'] },
@@ -47,8 +48,8 @@
 					<p class="mt-1 text-sm text-muted-foreground">Billed monthly · next charge $99 on 1 Aug 2026</p>
 				</div>
 				<div class="flex flex-col gap-2">
-					<Button variant="outline">Change plan</Button>
-					<Button variant="ghost" size="sm">Cancel subscription</Button>
+					<Button variant="outline" onclick={() => toast.info('Plan selection', 'Scroll down to compare plans.')}>Change plan</Button>
+					<Button variant="ghost" size="sm" onclick={() => toast.danger('Cancellation requested', 'Your subscription will end at the next billing cycle.')}>Cancel subscription</Button>
 				</div>
 			</div>
 
@@ -81,7 +82,7 @@
 					<p class="text-xs text-muted-foreground">Expires 12/28</p>
 				</div>
 			</div>
-			<Button variant="outline" class="w-full mt-3">Update card</Button>
+			<Button variant="outline" class="w-full mt-3" onclick={() => toast.info('Card update', 'Redirecting to secure payment portal...')}>Update card</Button>
 
 			<div class="mt-6 pt-6 border-t border-border">
 				<h3 class="font-semibold">Billing address</h3>
@@ -126,8 +127,9 @@
 						variant={currentPlan === plan.name ? 'outline' : 'primary'}
 						class="w-full"
 						disabled={currentPlan === plan.name}
+						onclick={() => currentPlan !== plan.name && (currentPlan = plan.name, toast.success('Plan changed', `You are now on the ${plan.name} plan.`))}
 					>
-						{currentPlan === plan.name ? 'Current plan' : plan.price > 99 ? 'Upgrade' : 'Downgrade'}
+						{currentPlan === plan.name ? 'Current plan' : plan.price > 99 ? 'Upgrade to Business' : plan.price === 0 ? 'Downgrade to Starter' : 'Switch plan'}
 					</Button>
 				</Card>
 			{/each}
@@ -141,7 +143,7 @@
 				<h3 class="text-base font-semibold">Billing history</h3>
 				<p class="text-sm text-muted-foreground">Past invoices and payments</p>
 			</div>
-			<Button variant="outline" size="sm">Download all</Button>
+			<Button variant="outline" size="sm" onclick={() => toast.info('Downloading...', 'Exporting all invoices as ZIP.')}>Download all</Button>
 		</div>
 		<div class="-mx-5 overflow-x-auto">
 			<table class="w-full text-sm">

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Button, Input, Label, Checkbox, Card } from '$lib/ui';
+	import { toast } from '$lib/stores/toast.svelte';
 	import { APP_CONFIG } from '$lib/config';
 
 	let email = $state('admin@apex.dev');
@@ -40,7 +41,7 @@
 				<Checkbox bind:checked={remember} />
 				<span>Remember me for 30 days</span>
 			</label>
-			<Button type="submit" class="w-full">Sign in</Button>
+			<Button class="w-full" onclick={() => { toast.success('Welcome back!', 'Redirecting to dashboard...'); setTimeout(() => window.location.href = '/', 1000); }}>Sign in</Button>
 		</form>
 		<div class="mt-4 text-center text-sm text-muted-foreground">
 			Don't have an account?

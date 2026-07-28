@@ -5,6 +5,7 @@
 	import { sidebar } from '$lib/stores/sidebar.svelte';
 	import { LogOut, PanelLeftClose, PanelRightClose } from '@lucide/svelte';
 	import { Modal, Button } from '$lib/ui';
+	import { toast } from '$lib/stores/toast.svelte';
 	import { NAV_GROUPS as navItems } from './nav-items';
 	
 	let currentPath = $derived(page.url.pathname);
@@ -13,7 +14,8 @@
 	function performLogout() {
 		logoutModal = false;
 		// Normally we'd clear tokens here, routing to login for demo:
-		window.location.href = '/login';
+		toast.info('Logging out...', 'See you soon.');
+		setTimeout(() => { window.location.href = '/login'; }, 1000);
 	}
 </script>
 

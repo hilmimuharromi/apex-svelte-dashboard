@@ -2,6 +2,7 @@
 	import { money } from '$lib/utils';
 	import { Users, UserCheck, UserX, Crown } from '@lucide/svelte';
 	import { StatCard, Card, Avatar, Badge, Button, Input, Select } from '$lib/ui';
+	import { toast } from '$lib/stores/toast.svelte';
 	import { generateCustomers, type Customer } from '$lib/data/mock';
 
 	const ALL = generateCustomers(60);
@@ -41,7 +42,7 @@
 			<h1 class="text-2xl font-semibold tracking-tight">Customers</h1>
 			<p class="mt-1 text-sm text-muted-foreground">{ALL.length} registered customers</p>
 		</div>
-		<Button>Add Customer</Button>
+		<Button onclick={() => toast.success('New customer', 'Customer form opened.')}>Add Customer</Button>
 	</div>
 
 	<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">

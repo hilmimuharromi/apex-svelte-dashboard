@@ -2,6 +2,7 @@
 	import { Search, Bell, Sun, Moon, Palette, Plus, CreditCard, User, Settings } from '@lucide/svelte';
 	import { APP_CONFIG } from '$lib/config';
 	import { Modal, Button, Input, Select, Label, Badge } from '$lib/ui';
+	import { toast } from '$lib/stores/toast.svelte';
 
 	let { onOpenPalette, onToggleTheme, onOpenCustomizer } = $props<{
 		onOpenPalette: () => void;
@@ -127,6 +128,6 @@
 	</div>
 	{#snippet footer()}
 		<Button variant="ghost" onclick={() => (orderModal = false)}>Cancel</Button>
-		<Button onclick={() => (orderModal = false)}>Create Order</Button>
+		<Button onclick={() => { orderModal = false; toast.success('Order created', 'Draft order saved to queue.'); }}>Create Order</Button>
 	{/snippet}
 </Modal>

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Card, Input, Label, Textarea, Select, Checkbox, Switch, Button, FormField, Badge } from '$lib/ui';
+	import { toast } from '$lib/stores/toast.svelte';
 
 	let name = $state('Aigars Silkalns');
 	let email = $state('aigars@apex.dev');

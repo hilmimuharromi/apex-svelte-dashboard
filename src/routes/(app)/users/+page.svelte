@@ -2,6 +2,7 @@
 	import { Card, Avatar, Badge, Button, Input, Select, Checkbox, Modal } from '$lib/ui';
 	import { UserPlus, Users as UsersIcon, ShieldCheck, UserX, MoreVertical } from '@lucide/svelte';
 	import { StatCard } from '$lib/ui';
+	import { toast } from '$lib/stores/toast.svelte';
 
 	let inviteModal = $state(false);
 
@@ -94,7 +95,7 @@
 		</div>
 		{#snippet footer()}
 			<Button variant="ghost" onclick={() => (inviteModal = false)}>Cancel</Button>
-			<Button onclick={() => (inviteModal = false)}>Send Invitation</Button>
+			<Button onclick={() => { inviteModal = false; toast.success('Invitation sent', 'The user will receive an email shortly.'); }}>Send Invitation</Button>
 		{/snippet}
 	</Modal>
 

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Card, Button, Input, Avatar, Badge, Modal, Textarea } from '$lib/ui';
+	import { toast } from '$lib/stores/toast.svelte';
 	let composeModal = $state(false);
 	import { Inbox, Send, FileText, Star, Trash, Search, Reply, Forward, Archive } from '@lucide/svelte';
 
@@ -59,7 +60,7 @@
 		</div>
 		{#snippet footer()}
 			<Button variant="ghost" onclick={() => (composeModal = false)}>Discard</Button>
-			<Button onclick={() => (composeModal = false)}>Send Message</Button>
+			<Button onclick={() => { composeModal = false; toast.success('Message sent', 'Your email has been sent.'); }}>Send Message</Button>
 		{/snippet}
 	</Modal>
 
@@ -131,6 +132,7 @@
 							</div>
 							<div class="flex gap-1">
 								<Button variant="ghost" size="icon" aria-label="Reply"><Reply class="h-4 w-4" /></Button>
+						<Button variant="ghost" size="icon" aria-label="Star" onclick={() => toast.info('Starred', 'Email added to starred.')}>⭐</Button>
 								<Button variant="ghost" size="icon" aria-label="Forward"><Forward class="h-4 w-4" /></Button>
 								<Button variant="ghost" size="icon" aria-label="Archive"><Archive class="h-4 w-4" /></Button>
 							</div>
