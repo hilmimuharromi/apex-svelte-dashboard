@@ -102,3 +102,4 @@
 		font-variant-numeric: tabular-nums;
 	}
 }
+@plugin "@tailwindcss/typography";
