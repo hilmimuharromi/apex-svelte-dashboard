@@ -47,6 +47,7 @@
 				<ul class="space-y-0.5">
 					{#each group.items as item}
 						{@const active = isActive(item.href)}
+						{@const Icon = item.icon}
 						<li>
 							<a
 								href={item.href}
@@ -59,7 +60,7 @@
 									collapsed && 'justify-center'
 								)}
 							>
-								<item.icon class="h-[18px] w-[18px] shrink-0" />
+								<Icon class="h-[18px] w-[18px] shrink-0" />
 								{#if !collapsed}
 									<span class="flex-1 truncate">{item.label}</span>
 									{#if item.badge != null}

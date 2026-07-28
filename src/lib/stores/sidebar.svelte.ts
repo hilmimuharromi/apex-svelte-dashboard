@@ -2,15 +2,19 @@ import { browser } from '$app/environment';
 
 const STORAGE_KEY = 'apex:sidebar-collapsed';
 
-function initial(): boolean {
-	if (!browser) return false;
-	const v = localStorage.getItem(STORAGE_KEY);
-	return v === '1';
-}
-
 class SidebarStore {
-	collapsed = $state(initial());
+	collapsed = $state(false);
 	mobileOpen = $state(false);
+
+	constructor() {
+		if (browser) {
+			// hydrate from localStorage after mount to avoid SSR/client mismatch
+			queueMicrotask(() => {
+				const v = localStorage.getItem(STORAGE_KEY);
+				if (v === '1') this.collapsed = true;
+			});
+		}
+	}
 
 	toggle() {
 		this.collapsed = !this.collapsed;

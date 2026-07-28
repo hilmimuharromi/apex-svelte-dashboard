@@ -1,4 +1,4 @@
-import type { ComponentType } from 'svelte';
+import type { Component } from 'svelte';
 import {
 	LayoutDashboard,
 	BarChart3,
@@ -28,7 +28,7 @@ import {
 export type NavItem = {
 	label: string;
 	href: string;
-	icon: ComponentType;
+	icon: Component;
 	badge?: string | number;
 };
 
