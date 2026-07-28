@@ -6,8 +6,8 @@ export function cn(...inputs: ClassValue[]): string {
 	return twMerge(clsx(inputs));
 }
 
-/** Format number as USD money string. */
-export function money(n: number, currency = 'USD', locale = 'en-US'): string {
+/** Format number as IDR money string. */
+export function money(n: number, currency = 'IDR', locale = 'id-ID'): string {
 	return new Intl.NumberFormat(locale, {
 		style: 'currency',
 		currency,
