@@ -10,11 +10,13 @@
 		delta?: number;
 		deltaLabel?: string;
 		icon?: Component;
+		invert?: boolean;
 		class?: string;
 	};
 
-	let { label, value, delta, deltaLabel = 'vs last month', icon: Icon, class: cls }: Props = $props();
+	let { label, value, delta, deltaLabel = 'vs last month', icon: Icon, invert = false, class: cls }: Props = $props();
 	const up = $derived(delta != null && delta >= 0);
+	const positive = $derived(invert ? !up : up);
 </script>
 
 <div class={cn('rounded-xl border border-border bg-card p-5 shadow-sm', cls)}>
@@ -29,7 +31,7 @@
 	<p class="mt-3 text-2xl font-semibold tabular">{value}</p>
 	{#if delta != null}
 		<div class="mt-2 flex items-center gap-1 text-xs">
-			<span class="inline-flex items-center gap-0.5 font-medium {up ? 'text-success' : 'text-danger'}">
+			<span class="inline-flex items-center gap-0.5 font-medium {positive ? 'text-success' : 'text-danger'}">
 				{#if up}
 					<ArrowUp class="h-3 w-3" />
 				{:else}
