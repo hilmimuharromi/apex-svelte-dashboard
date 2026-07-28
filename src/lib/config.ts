@@ -4,16 +4,15 @@
  */
 export const APP_CONFIG = {
 	brand: {
-		name: 'Apex',
-		suffix: 'DASHBOARD',
-		full: 'Apex Dashboard'
+		name: 'Miromi',
+		suffix: 'KIDS CARE',
+		full: 'Miromi Kids Care'
 	},
-	// User visible in header/sidebar (placeholder — replace with real session)
 	user: {
-		name: 'Aigars S.',
-		role: 'Admin',
-		email: 'admin@apex.local',
-		initials: 'AS'
+		name: 'Admin',
+		role: 'Administrator',
+		email: 'admin@miromi.id',
+		initials: 'AD'
 	},
 	features: {
 		commandPalette: true,

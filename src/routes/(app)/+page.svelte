@@ -32,7 +32,7 @@
 
 	<!-- Stat cards -->
 	<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-		<StatCard label="Total Revenue" value={money(48295)} delta={12.5} icon={DollarSign} />
+		<StatCard label="Total Revenue" value={money(58295000)} delta={12.5} icon={DollarSign} />
 		<StatCard label="Active Users" value={(2847).toLocaleString()} delta={8.2} icon={Users} />
 		<StatCard label="Total Orders" value={(1432).toLocaleString()} delta={-3.1} icon={ShoppingCart} />
 		<StatCard label="Page Views" value={compact(284000)} delta={24.7} icon={Eye} />
@@ -61,7 +61,7 @@
 					{/each}
 				</div>
 			{/snippet}
-			<BarChart data={MONTHLY_REVENUE} yFormat={(v) => `$${v / 1000}k`} height={280} />
+			<BarChart data={MONTHLY_REVENUE} yFormat={(v) => money(v).replace('Rp', 'Rp ').replace(/\s+/g, ' ')} height={280} />
 		</Card>
 
 		<Card title="Summary" description="Year-to-date snapshot">

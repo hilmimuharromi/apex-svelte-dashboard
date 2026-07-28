@@ -1,6 +1,6 @@
 import { money } from '$lib/utils';
 
-export type Order = {
+export type DashboardOrder = {
 	id: string;
 	customer: { name: string; initials: string };
 	product: string;
@@ -8,46 +8,46 @@ export type Order = {
 	status: 'Completed' | 'Processing' | 'Pending' | 'Cancelled';
 };
 
-export const RECENT_ORDERS: Order[] = [
-	{ id: 'ORD-7891', customer: { name: 'Emma Wilson', initials: 'EW' }, product: 'Pro Dashboard License', amount: 299, status: 'Completed' },
-	{ id: 'ORD-7890', customer: { name: 'James Chen', initials: 'JC' }, product: 'Team Plan Upgrade', amount: 599, status: 'Processing' },
-	{ id: 'ORD-7889', customer: { name: 'Sofia Garcia', initials: 'SG' }, product: 'Enterprise License', amount: 1499, status: 'Completed' },
-	{ id: 'ORD-7888', customer: { name: 'Alex Thompson', initials: 'AT' }, product: 'Single License', amount: 79, status: 'Pending' },
-	{ id: 'ORD-7887', customer: { name: 'Maria Santos', initials: 'MS' }, product: 'Pro Dashboard License', amount: 299, status: 'Completed' },
-	{ id: 'ORD-7886', customer: { name: 'David Kim', initials: 'DK' }, product: 'Team Plan Upgrade', amount: 599, status: 'Cancelled' }
+export const RECENT_ORDERS: DashboardOrder[] = [
+	{ id: 'ORD-10042', customer: { name: 'Emma Wilson', initials: 'EW' }, product: 'Sunscreen Anak SPF50+', amount: 89000, status: 'Completed' },
+	{ id: 'ORD-10041', customer: { name: 'Sofia Garcia', initials: 'SG' }, product: 'Body Lotion pelembab', amount: 65000, status: 'Processing' },
+	{ id: 'ORD-10040', customer: { name: 'Maria Santos', initials: 'MS' }, product: 'Diaper Cream + Baby Wash', amount: 127000, status: 'Completed' },
+	{ id: 'ORD-10039', customer: { name: 'David Kim', initials: 'DK' }, product: 'Face Cream Anak', amount: 78000, status: 'Pending' },
+	{ id: 'ORD-10038', customer: { name: 'Priya Patel', initials: 'PP' }, product: 'Sunscreen Anak SPF50+ (100ml)', amount: 119000, status: 'Completed' },
+	{ id: 'ORD-10037', customer: { name: 'Yuki Tanaka', initials: 'YT' }, product: 'Hair Conditioner Anak', amount: 48000, status: 'Cancelled' }
 ];
 
 export const MONTHLY_REVENUE = [
-	{ label: 'Jan', value: 18400 },
-	{ label: 'Feb', value: 22100 },
-	{ label: 'Mar', value: 25800 },
-	{ label: 'Apr', value: 27300 },
-	{ label: 'May', value: 31500 },
-	{ label: 'Jun', value: 29200 },
-	{ label: 'Jul', value: 34700 },
-	{ label: 'Aug', value: 36100 },
-	{ label: 'Sep', value: 38900 },
-	{ label: 'Oct', value: 42200 },
-	{ label: 'Nov', value: 45100 },
-	{ label: 'Dec', value: 48295 }
+	{ label: 'Jan', value: 28400000 },
+	{ label: 'Feb', value: 32100000 },
+	{ label: 'Mar', value: 35800000 },
+	{ label: 'Apr', value: 37300000 },
+	{ label: 'May', value: 41500000 },
+	{ label: 'Jun', value: 39200000 },
+	{ label: 'Jul', value: 44700000 },
+	{ label: 'Aug', value: 46100000 },
+	{ label: 'Sep', value: 48900000 },
+	{ label: 'Oct', value: 52200000 },
+	{ label: 'Nov', value: 55100000 },
+	{ label: 'Dec', value: 58295000 }
 ];
 
 export const TRAFFIC_SOURCES = [
-	{ label: 'Direct', value: 35 },
-	{ label: 'Organic', value: 28 },
-	{ label: 'Referral', value: 22 },
-	{ label: 'Social', value: 15 }
+	{ label: 'Instagram', value: 38 },
+	{ label: 'Tokopedia', value: 27 },
+	{ label: 'Direct', value: 20 },
+	{ label: 'WhatsApp', value: 15 }
 ];
 
 export const GOALS = [
-	{ label: 'Monthly Revenue', value: 88, description: `${money(48295)} of ${money(55000)}` },
+	{ label: 'Monthly Revenue', value: 88, description: `${money(58295000)} of ${money(65000000)}` },
 	{ label: 'New Customers', value: 85, description: '847 of 1,000' },
-	{ label: 'Conversion Rate', value: 76, description: '3.8% of 5%' }
+	{ label: 'Repeat Purchase', value: 64, description: '32% of 50%' }
 ];
 
 export const DASHBOARD_SUMMARY = {
-	total: 397995,
-	monthlyAvg: 33166,
-	peakMonth: { label: 'Dec', value: 48295 },
+	total: 497995000,
+	monthlyAvg: 41499583,
+	peakMonth: { label: 'Dec', value: 58295000 },
 	yoyGrowth: 162.5
 };

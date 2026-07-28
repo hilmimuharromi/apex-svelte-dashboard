@@ -1,4 +1,4 @@
-import type { StatusPillStatus } from '$lib/ui/StatusPill.svelte';
+type StatusPillStatus = string;
 
 export type Invoice = {
 	id: string;

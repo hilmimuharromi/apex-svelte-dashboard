@@ -7,6 +7,7 @@
 	} from '$lib/ui';
 	import type { TableColumn } from '$lib/ui';
 	import { toast } from '$lib/stores/toast.svelte';
+	import { money } from '$lib/utils';
 	import { Search, Plus, Trash2, Download, Inbox } from '@lucide/svelte';
 
 	// ── Interactive state for live demos ──
@@ -271,10 +272,10 @@ await clientApi.post('/orders', {
 	<section class="space-y-3">
 		<h2 class="text-lg font-semibold">StatCard</h2>
 		<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-			<StatCard label="Revenue" value="$48,295" change="+12.5%" trend="up" />
-			<StatCard label="Users" value="2,847" change="+8.2%" trend="up" />
-			<StatCard label="Churn" value="1.2%" change="-0.3%" trend="down" />
-			<StatCard label="Orders" value="1,432" change="-3.1%" trend="down" />
+			<StatCard label="Revenue" value={money(58295000)} delta={12.5} />
+				<StatCard label="Users" value="2,847" delta={8.2} />
+				<StatCard label="Churn" value="1.2%" delta={-0.3} />
+				<StatCard label="Orders" value="1,432" delta={-3.1} />
 		</div>
 		<pre class="text-xs bg-muted rounded-lg p-4 overflow-x-auto"><code>{code.statcard}</code></pre>
 	</section>
