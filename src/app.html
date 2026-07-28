@@ -4,6 +4,28 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="text-scale" content="scale" />
+		<script>
+			// Prevent flash of wrong theme — runs before paint
+			try {
+				const t = JSON.parse(localStorage.getItem('apex-theme') || '{}');
+				if (t.mode === 'dark') document.documentElement.classList.add('dark');
+				if (t.accent) {
+					const accents = {
+						emerald: 'oklch(0.72 0.18 155)',
+						blue: 'oklch(0.62 0.19 250)',
+						violet: 'oklch(0.62 0.22 295)',
+						orange: 'oklch(0.73 0.17 55)',
+						pink: 'oklch(0.65 0.24 350)',
+						red: 'oklch(0.62 0.22 25)'
+					};
+					const c = accents[t.accent];
+					if (c) {
+						document.documentElement.style.setProperty('--color-primary', c);
+						document.documentElement.style.setProperty('--color-ring', c);
+					}
+				}
+			} catch (e) {}
+		</script>
 		%sveltekit.head%
 	</head>
 	<body data-sveltekit-preload-data="hover">

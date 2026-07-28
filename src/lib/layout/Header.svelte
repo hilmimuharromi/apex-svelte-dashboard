@@ -4,8 +4,7 @@
 	import { Modal, Button, Input, Select, Label, Badge } from '$lib/ui';
 	import { toast } from '$lib/stores/toast.svelte';
 
-	let { onOpenPalette, onToggleTheme, onOpenCustomizer } = $props<{
-		onOpenPalette: () => void;
+	let { onToggleTheme, onOpenCustomizer } = $props<{
 		onToggleTheme: () => void;
 		onOpenCustomizer: () => void;
 	}>();
