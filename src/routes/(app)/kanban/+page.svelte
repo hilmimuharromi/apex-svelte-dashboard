@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { Card, Badge, Button, Avatar } from '$lib/ui';
+	import { Card, Badge, Button, Avatar, Modal, Input, Label, Select, Textarea } from '$lib/ui';
+	let taskModal = $state(false);
 	import { Plus, MessageSquare, Paperclip } from '@lucide/svelte';
 
 	type Task = {
@@ -86,8 +87,24 @@
 			<h1 class="text-2xl font-semibold tracking-tight">Kanban</h1>
 			<p class="mt-1 text-sm text-muted-foreground">Drag tasks between columns to update status</p>
 		</div>
-		<Button><Plus class="h-4 w-4" /> New Task</Button>
+		<Button onclick={() => (taskModal = true)}><Plus class="h-4 w-4" /> New Task</Button>
 	</div>
+
+	<!-- New Task Modal -->
+	<Modal bind:open={taskModal} title="Create New Task">
+		<div class="space-y-4">
+			<div class="space-y-1.5"><Label>Task Title</Label><Input placeholder="E.g. Update landing page copy" /></div>
+			<div class="space-y-1.5"><Label>Description (optional)</Label><Textarea placeholder="Add details..." /></div>
+			<div class="grid grid-cols-2 gap-4">
+				<div class="space-y-1.5"><Label>Priority</Label><Select><option>Low</option><option>Medium</option><option>High</option></Select></div>
+				<div class="space-y-1.5"><Label>Status</Label><Select><option>Backlog</option><option>To Do</option><option>In Progress</option></Select></div>
+			</div>
+		</div>
+		{#snippet footer()}
+			<Button variant="ghost" onclick={() => (taskModal = false)}>Cancel</Button>
+			<Button onclick={() => (taskModal = false)}>Create Task</Button>
+		{/snippet}
+	</Modal>
 
 	<div class="flex gap-4 overflow-x-auto pb-4 -mx-6 px-6">
 		{#each columns as col (col.id)}

@@ -20,3 +20,4 @@ export { default as Skeleton } from './Skeleton.svelte';
 export { default as Spinner } from './Spinner.svelte';
 
 export type { TableColumn } from './Table.svelte';
+export { default as Modal } from './Modal.svelte';

@@ -1,7 +1,9 @@
 <script lang="ts">
-	import { Card, Avatar, Badge, Button, Input, Select, Checkbox } from '$lib/ui';
+	import { Card, Avatar, Badge, Button, Input, Select, Checkbox, Modal } from '$lib/ui';
 	import { UserPlus, Users as UsersIcon, ShieldCheck, UserX, MoreVertical } from '@lucide/svelte';
 	import { StatCard } from '$lib/ui';
+
+	let inviteModal = $state(false);
 
 	type Role = 'Owner' | 'Admin' | 'Editor' | 'Viewer';
 	type Status = 'Active' | 'Invited' | 'Suspended';
@@ -70,8 +72,31 @@
 			<h1 class="text-2xl font-semibold tracking-tight">Users</h1>
 			<p class="mt-1 text-sm text-muted-foreground">Manage team members and permissions</p>
 		</div>
-		<Button><UserPlus class="h-4 w-4" /> Invite user</Button>
+		<Button onclick={() => (inviteModal = true)}><UserPlus class="h-4 w-4" /> Invite user</Button>
 	</div>
+
+	<!-- Modal Invite User -->
+	<Modal bind:open={inviteModal} title="Invite Team Member" description="Send an invitation link to a new user.">
+		<div class="space-y-4">
+			<div class="space-y-1.5">
+				<label for="email" class="text-sm font-medium">Email address</label>
+				<Input id="email" type="email" placeholder="name@company.com" />
+			</div>
+			<div class="space-y-1.5">
+				<label for="role" class="text-sm font-medium">Role</label>
+				<Select id="role">
+					<option value="Admin">Admin</option>
+					<option value="Editor" selected>Editor</option>
+					<option value="Viewer">Viewer</option>
+				</Select>
+				<p class="text-xs text-muted-foreground mt-1">Editors can create and edit content, but cannot manage billing.</p>
+			</div>
+		</div>
+		{#snippet footer()}
+			<Button variant="ghost" onclick={() => (inviteModal = false)}>Cancel</Button>
+			<Button onclick={() => (inviteModal = false)}>Send Invitation</Button>
+		{/snippet}
+	</Modal>
 
 	<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
 		<StatCard label="Total members" value={users.length} icon={UsersIcon} />

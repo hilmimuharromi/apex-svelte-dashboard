@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { Card, Button, Input, Avatar, Badge } from '$lib/ui';
+	import { Card, Button, Input, Avatar, Badge, Modal, Textarea } from '$lib/ui';
+	let composeModal = $state(false);
 	import { Inbox, Send, FileText, Star, Trash, Search, Reply, Forward, Archive } from '@lucide/svelte';
 
 	type Email = {
@@ -49,10 +50,23 @@
 	<h1 class="text-2xl font-semibold tracking-tight">Mail</h1>
 
 	<Card class="p-0 overflow-hidden">
-		<div class="grid lg:grid-cols-[220px_320px_1fr] h-[calc(100vh-13rem)] divide-x divide-border">
+		<!-- Compose Modal -->
+	<Modal bind:open={composeModal} title="New Message">
+		<div class="space-y-4">
+			<Input placeholder="To" />
+			<Input placeholder="Subject" />
+			<Textarea placeholder="Write your message here..." class="h-32" />
+		</div>
+		{#snippet footer()}
+			<Button variant="ghost" onclick={() => (composeModal = false)}>Discard</Button>
+			<Button onclick={() => (composeModal = false)}>Send Message</Button>
+		{/snippet}
+	</Modal>
+
+	<div class="grid lg:grid-cols-[220px_320px_1fr] h-[calc(100vh-13rem)] divide-x divide-border">
 			<!-- Folders -->
 			<div class="p-4 space-y-1">
-				<Button class="w-full mb-3">Compose</Button>
+				<Button class="w-full mb-3" onclick={() => (composeModal = true)}>Compose</Button>
 				{#each folders as f}
 					<button
 						class="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-left transition-colors {activeFolder === f.id ? 'bg-primary/10 text-primary font-medium' : 'hover:bg-muted'}"
