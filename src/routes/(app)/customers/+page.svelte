@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { StatCard, Card, Badge, Avatar, Button, Input, Select, Modal } from '$lib/ui';
+	import { StatCard, Card, Badge, Avatar, Button, Input, Select, Modal, EmptyState } from '$lib/ui';
 	import { generateCustomers } from '$lib/data/mock';
 	import type { Customer } from '$lib/types/catalog';
 	import { money, compact } from '$lib/utils';
@@ -132,8 +132,8 @@
 				<tbody>
 					{#if rows.length === 0}
 						<tr>
-							<td colspan="8" class="px-5 py-12 text-center text-muted-foreground">
-								No customers found.
+							<td colspan="8" class="px-5 py-6">
+								<EmptyState title="No customers found" description="Try adjusting your search query or membership status filter." />
 							</td>
 						</tr>
 					{:else}

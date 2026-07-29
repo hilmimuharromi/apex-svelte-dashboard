@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { money } from '$lib/utils';
 	import { ShoppingCart, DollarSign, CheckCircle, Clock, Package, Truck, MapPin, Eye } from '@lucide/svelte';
-	import { StatCard, Card, Badge, Button, Input, Select, Modal } from '$lib/ui';
+	import { StatCard, Card, Badge, Button, Input, Select, Modal, EmptyState } from '$lib/ui';
 	import { generateOrders } from '$lib/data/mock';
 	import type { Order, OrderStatus } from '$lib/types/catalog';
 
@@ -122,8 +122,8 @@
 				<tbody>
 					{#if rows.length === 0}
 						<tr>
-							<td colspan="9" class="px-5 py-12 text-center text-muted-foreground">
-								No orders match your filters.
+							<td colspan="10" class="px-5 py-6">
+								<EmptyState title="No orders match your filters" description="Try adjusting your search query or status filter." />
 							</td>
 						</tr>
 					{:else}

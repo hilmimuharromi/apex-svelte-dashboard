@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Card, Input, Label, Textarea, Select, Switch, Button, FormField, ImageUpload, Badge } from '$lib/ui';
+	import { Card, Input, Label, Textarea, Select, Switch, Button, FormField, ImageUpload, Badge, EmptyState } from '$lib/ui';
 	import { toast } from '$lib/stores/toast.svelte';
 	import { Store, Truck, CreditCard, Bell, Save, Trash2 } from '@lucide/svelte';
 
@@ -181,6 +181,12 @@
 										<Button variant="ghost" size="sm" class="h-8 w-8 p-0 text-danger hover:bg-danger/10" onclick={() => removeShippingRate(idx)}>
 											<Trash2 class="h-4 w-4" />
 										</Button>
+									</td>
+								</tr>
+							{:else}
+								<tr>
+									<td colspan="6" class="p-4">
+										<EmptyState title="No shipping rates defined" description="Click 'Add Delivery Route' to add one." />
 									</td>
 								</tr>
 							{/each}

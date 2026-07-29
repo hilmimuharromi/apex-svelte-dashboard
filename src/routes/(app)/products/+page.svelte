@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { money, compact } from '$lib/utils';
 	import { Package, TrendingUp, Archive, Star, Pencil, Plus, FlaskConical, Baby, ShieldCheck } from '@lucide/svelte';
-	import { StatCard, Card, Badge, Button, Input, Select, FormField, Modal, RichTextEditor, ImageUpload, Checkbox, Textarea } from '$lib/ui';
+	import { StatCard, Card, Badge, Button, Input, Select, FormField, Modal, RichTextEditor, ImageUpload, Checkbox, Textarea, EmptyState } from '$lib/ui';
 	import { toast } from '$lib/stores/toast.svelte';
 	import { generateProducts } from '$lib/data/mock';
 	import type { Product } from '$lib/types/catalog';
@@ -308,7 +308,9 @@
 				</Card>
 			</div>
 		{:else}
-			<div class="col-span-full text-center py-16 text-muted-foreground">No products found.</div>
+			<div class="col-span-full">
+				<EmptyState title="No products found" description="Try adjusting your filters or search terms." />
+			</div>
 		{/each}
 	</div>
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Card, Badge, Button, Input, Select, FormField, Modal, RichTextEditor, ImageUpload, StatCard } from '$lib/ui';
+	import { Card, Badge, Button, Input, Select, FormField, Modal, RichTextEditor, ImageUpload, StatCard, EmptyState } from '$lib/ui';
 	import type { BlogPost } from '$lib/types/catalog';
 	import { compact } from '$lib/utils';
 	import { toast } from '$lib/stores/toast.svelte';
@@ -180,9 +180,7 @@
 
 	<!-- Blog Card Grid -->
 	{#if filtered.length === 0}
-		<div class="rounded-xl border border-border bg-card p-12 text-center text-muted-foreground">
-			No articles match your criteria.
-		</div>
+		<EmptyState title="No articles match your criteria" description="Try adjusting your filters or search query." />
 	{:else}
 		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 			{#each filtered as post (post.id)}
