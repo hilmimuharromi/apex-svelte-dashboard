@@ -5,7 +5,7 @@
 	import { toast } from '$lib/stores/toast.svelte';
 	import { generateInvoices, type Invoice } from '$lib/data/invoices';
 
-	const ALL = generateInvoices(30);
+	let ALL = data.invoices;
 
 	let search = $state('');
 	let statusFilter = $state('All');
@@ -30,6 +30,10 @@
 	const STATUS_VARIANT: Record<Invoice['status'], 'success' | 'warning' | 'danger' | 'default'> = {
 		Paid: 'success', Pending: 'warning', Overdue: 'danger', Draft: 'default'
 	};
+	import type { PageData } from './$types';
+
+	let { data }: { data: PageData } = $props();
+
 </script>
 
 <div class="space-y-6">

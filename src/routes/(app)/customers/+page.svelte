@@ -5,7 +5,7 @@
 	import { money, compact } from '$lib/utils';
 	import { Users, UserCheck, Crown, Star, Baby, Phone, Eye } from '@lucide/svelte';
 
-	const ALL = generateCustomers(60);
+	let ALL = data.customers;
 
 	let search = $state('');
 	let membershipFilter = $state('All');
@@ -78,6 +78,10 @@
 		selectedCustomer = customer;
 		showModal = true;
 	}
+	import type { PageData } from './$types';
+
+	let { data }: { data: PageData } = $props();
+
 </script>
 
 <div class="space-y-6">

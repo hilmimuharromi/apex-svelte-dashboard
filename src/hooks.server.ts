@@ -1,63 +1,55 @@
 /**
- * SSR auth hook — runs on every request.
+ * Server hooks — runs on every request.
  *
- * 1. Reads `access_token` cookie.
- * 2. If present → calls BE `/auth/me` to validate & get user → sets locals.user.
- * 3. If BE is unreachable (template mode) → falls back to dummy user so the app still works.
+ * Reads the `access_token` cookie and populates `locals.user` + `locals.token`.
  *
- * When you connect a real backend, remove the DUMMY fallback block.
+ * ── DUMMY MODE ──
+ * Right now any non-empty token creates a mock user from APP_CONFIG.
+ * When the backend is ready, replace the verify block (commented below)
+ * with a real /auth/me call that exchanges the token for a user.
  */
-import { redirect, type Handle } from '@sveltejs/kit';
-import { api, ApiError } from '$lib/server/api';
+import type { Handle } from '@sveltejs/kit';
+import { redirect } from '@sveltejs/kit';
+import { APP_CONFIG } from '$lib/config';
 import type { User } from '$lib/types/auth';
-
-// ── DUMMY MODE: remove when connecting real BE ──────────────────────────
-const DUMMY_USER: User = {
-	id: 'usr_001',
-	name: 'Admin User',
-	email: 'admin@apex.dev',
-	role: 'Admin',
-	avatar: null
-};
-const DUMMY_MODE = true; // flip to false when BE is ready
-// ────────────────────────────────────────────────────────────────────────
+// import { api } from '$lib/server/api';
 
 const PUBLIC_PATHS = ['/login', '/register', '/forgot-password'];
 
 export const handle: Handle = async ({ event, resolve }) => {
 	const token = event.cookies.get('access_token');
-	event.locals.token = token ?? null;
-	event.locals.user = null;
 
+	// ── DUMMY MODE ──
 	if (token) {
-		if (DUMMY_MODE) {
-			// Template mode: any token = logged in
-			event.locals.user = DUMMY_USER;
-		} else {
-			// Real BE: validate token
-			try {
-				const user = await api.get<User>('/auth/me', {
-					cookies: event.cookies
-				});
-				event.locals.user = user;
-			} catch (e) {
-				// Token invalid/expired — clear it
-				if (e instanceof ApiError && e.status === 401) {
-					event.cookies.delete('access_token', { path: '/' });
-				}
-			}
-		}
+		event.locals.user = {
+			id: 'usr_001',
+			name: APP_CONFIG.user.name,
+			email: APP_CONFIG.user.email,
+			role: APP_CONFIG.user.role,
+			avatar: null
+		} satisfies User;
+		event.locals.token = token;
+
+		// ── REAL BE MODE (uncomment when backend is ready) ──
+		// try {
+		// 	const user = await api.get<User>('/auth/me', { token });
+		// 	event.locals.user = user;
+		// 	event.locals.token = token;
+		// } catch {
+		// 	// Token invalid/expired — clear it
+		// 	event.cookies.delete('access_token', { path: '/' });
+		// 	event.locals.user = null;
+		// 	event.locals.token = null;
+		// }
+	} else {
+		event.locals.user = null;
+		event.locals.token = null;
 	}
 
-	// Redirect to /login if accessing protected route without auth
-	const isPublicPath = PUBLIC_PATHS.some((p) => event.url.pathname.startsWith(p));
-	if (!event.locals.user && !isPublicPath) {
+	// Redirect unauthenticated users to login (except public routes)
+	const path = event.url.pathname;
+	if (!event.locals.user && !PUBLIC_PATHS.some((p) => path.startsWith(p))) {
 		throw redirect(303, '/login');
-	}
-
-	// Redirect to / if already logged in and accessing auth pages
-	if (event.locals.user && isPublicPath) {
-		throw redirect(303, '/');
 	}
 
 	return resolve(event);

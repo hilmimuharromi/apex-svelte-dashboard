@@ -11,13 +11,11 @@
 	} from '$lib/ui';
 	import BarChart from '$lib/charts/BarChart.svelte';
 	import DonutChart from '$lib/charts/DonutChart.svelte';
-	import {
-		RECENT_ORDERS,
-		MONTHLY_REVENUE,
-		TRAFFIC_SOURCES,
-		GOALS,
-		DASHBOARD_SUMMARY
-	} from '$lib/data/dashboard';
+	import type { PageData } from './$types';
+
+	let { data }: { data: PageData } = $props();
+
+	const { recentOrders, monthlyRevenue, trafficSources, goals, summary } = data.dashboard;
 
 	let chartTab = $state<'Revenue' | 'Orders' | 'Profit'>('Revenue');
 </script>
@@ -32,7 +30,7 @@
 
 	<!-- Stat cards -->
 	<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-		<StatCard label="Total Revenue" value={money(58295000)} delta={12.5} icon={DollarSign} />
+		<StatCard label="Total Revenue" value={money(summary.total)} delta={12.5} icon={DollarSign} />
 		<StatCard label="Active Users" value={(2847).toLocaleString()} delta={8.2} icon={Users} />
 		<StatCard label="Total Orders" value={(1432).toLocaleString()} delta={-3.1} icon={ShoppingCart} />
 		<StatCard label="Page Views" value={compact(284000)} delta={24.7} icon={Eye} />
@@ -61,30 +59,30 @@
 					{/each}
 				</div>
 			{/snippet}
-			<BarChart data={MONTHLY_REVENUE} yFormat={(v) => money(v).replace('Rp', 'Rp ').replace(/\s+/g, ' ')} height={280} />
+			<BarChart data={monthlyRevenue} yFormat={(v) => money(v).replace('Rp', 'Rp ').replace(/\s+/g, ' ')} height={280} />
 		</Card>
 
 		<Card title="Summary" description="Year-to-date snapshot">
 			<div class="space-y-4">
 				<div>
 					<p class="text-xs text-muted-foreground">Total Revenue</p>
-					<p class="text-2xl font-semibold tabular">{money(DASHBOARD_SUMMARY.total)}</p>
+					<p class="text-2xl font-semibold tabular">{money(summary.total)}</p>
 					<p class="text-xs text-muted-foreground">full year</p>
 				</div>
 				<div class="grid grid-cols-2 gap-3">
 					<div class="rounded-lg border border-border p-3">
 						<p class="text-xs text-muted-foreground">Monthly avg</p>
-						<p class="text-sm font-semibold tabular">{money(DASHBOARD_SUMMARY.monthlyAvg)}</p>
+						<p class="text-sm font-semibold tabular">{money(summary.monthlyAvg)}</p>
 					</div>
 					<div class="rounded-lg border border-border p-3">
 						<p class="text-xs text-muted-foreground">Peak month</p>
-						<p class="text-sm font-semibold">{DASHBOARD_SUMMARY.peakMonth.label}</p>
-						<p class="text-xs tabular">{money(DASHBOARD_SUMMARY.peakMonth.value)}</p>
+						<p class="text-sm font-semibold">{summary.peakMonth.label}</p>
+						<p class="text-xs tabular">{money(summary.peakMonth.value)}</p>
 					</div>
 				</div>
 				<div class="rounded-lg border border-border p-3">
 					<p class="text-xs text-muted-foreground">YoY growth</p>
-					<p class="text-lg font-semibold text-success tabular">{pct(DASHBOARD_SUMMARY.yoyGrowth)}</p>
+					<p class="text-lg font-semibold text-success tabular">{pct(summary.yoyGrowth)}</p>
 					<p class="text-xs text-muted-foreground">Jan → Dec</p>
 				</div>
 			</div>
@@ -95,9 +93,9 @@
 	<div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
 		<Card title="Traffic Sources" description="Sessions by channel">
 			<div class="grid grid-cols-2 gap-4 items-center">
-				<DonutChart data={TRAFFIC_SOURCES} centerLabel="Traffic" centerValue="100%" />
+				<DonutChart data={trafficSources} centerLabel="Traffic" centerValue="100%" />
 				<ul class="space-y-3">
-					{#each TRAFFIC_SOURCES as src, i}
+					{#each trafficSources as src, i}
 						{@const colors = ['bg-primary', 'bg-info', 'bg-warning', 'bg-danger']}
 						<li class="flex items-center justify-between text-sm">
 							<span class="inline-flex items-center gap-2">
@@ -113,7 +111,7 @@
 
 		<Card title="Goals" description="Progress toward monthly targets">
 			<div class="space-y-5">
-				{#each GOALS as goal}
+				{#each goals as goal}
 					<ProgressBar {...goal} />
 				{/each}
 			</div>
@@ -129,7 +127,7 @@
 			</div>
 		{/snippet}
 		{#snippet action()}
-			<Button variant="ghost" size="sm">View all</Button>
+			<Button variant="ghost" size="sm" href="/orders">View all</Button>
 		{/snippet}
 		<div class="-m-5 overflow-x-auto">
 			<table class="w-full text-sm">
@@ -142,7 +140,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					{#each RECENT_ORDERS as order (order.id)}
+					{#each recentOrders as order (order.id)}
 						<tr class="border-t border-border hover:bg-muted/40 transition-colors">
 							<td class="px-5 py-3">
 								<div class="flex items-center gap-3">

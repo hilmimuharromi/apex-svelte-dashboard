@@ -4,12 +4,19 @@
 	import ThemeCustomizer from '$lib/layout/ThemeCustomizer.svelte';
 	import { Toaster } from '$lib/ui';
 	import { theme } from '$lib/stores/theme.svelte';
+	import { auth } from '$lib/stores/auth.svelte';
+	import { page } from '$app/state';
 
 	let { children } = $props();
 
 	// Init theme on mount (client-only)
 	$effect(() => {
 		theme.init();
+	});
+
+	// Keep client-side auth store in sync with server data
+	$effect(() => {
+		auth.sync(page.data.user);
 	});
 
 	let customizerOpen = $state(false);

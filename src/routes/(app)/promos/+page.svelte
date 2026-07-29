@@ -5,7 +5,7 @@
 	import { money } from '$lib/utils';
 	import { Tag, Plus, Pencil, Percent, Gift, Clock } from '@lucide/svelte';
 
-	let promos = $state<Promo[]>(generatePromos());
+	let promos = $state<Promo[]>(data.promos);
 
 	let isEditing = $state(false);
 	let modalOpen = $state(false);
@@ -63,17 +63,20 @@
 		if (isEditing) {
 			const idx = promos.findIndex((p) => p.id === form.id);
 			if (idx !== -1) {
+				clientApi.put(`/api/promos/${form.id}`, { body: form }).then(r => promos[idx] = r as any);
 				promos[idx] = { ...form };
 			}
 		} else {
-			promos.push({ ...form });
+			clientApi.post('/api/promos', { body: form }).then(r => promos.push(r as any));
 		}
 		modalOpen = false;
 	}
 
 	function deletePromo(id: string) {
 		if (confirm('Are you sure you want to delete this promo?')) {
-			promos = promos.filter((p) => p.id !== id);
+			clientApi.delete(`/api/promos/${id}`).then(() => {
+				promos = promos.filter((p) => p.id !== id);
+			});
 		}
 	}
 
@@ -87,6 +90,10 @@
 		}
 		return `${val}`;
 	}
+	import type { PageData } from './$types';
+
+	let { data }: { data: PageData } = $props();
+
 </script>
 
 <div class="space-y-6 text-foreground">

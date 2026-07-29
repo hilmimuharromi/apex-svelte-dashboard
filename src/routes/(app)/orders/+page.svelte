@@ -5,7 +5,7 @@
 	import { generateOrders } from '$lib/data/mock';
 	import type { Order, OrderStatus } from '$lib/types/catalog';
 
-	const ALL = $state(generateOrders(80));
+	let ALL = $state(data.orders);
 
 	let search = $state('');
 	let statusFilter = $state('All');
@@ -62,6 +62,11 @@
 		selectedOrder = order;
 		modalOpen = true;
 	}
+	import { clientApi } from '$lib/api';
+	import type { PageData } from './$types';
+
+	let { data }: { data: PageData } = $props();
+
 </script>
 
 <div class="space-y-6">

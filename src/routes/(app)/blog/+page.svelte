@@ -7,7 +7,7 @@
 	import { BookOpen, Plus, Pencil, Eye, Calendar, Tag } from '@lucide/svelte';
 
 	// Initializing blogs from mock data
-	const ALL_POSTS = $state(generateBlogPosts());
+	let ALL_POSTS = $state(data.posts);
 
 	let search = $state('');
 	let statusFilter = $state('All');
@@ -120,6 +120,7 @@
 				editingPost.publishedAt = today;
 			}
 			editingPost.status = formData.status;
+			clientApi.put(`/api/blog/${editingPost.id}`, { body: editingPost });
 
 			toast.success('Updated', `"${formData.title}" updated successfully.`);
 		} else {
@@ -137,11 +138,15 @@
 				publishedAt: formData.status === 'published' ? today : '',
 				views: 0
 			};
-			ALL_POSTS.unshift(newPost);
+			clientApi.post('/api/blog', { body: newPost }).then(r => ALL_POSTS.unshift(r as any));
 			toast.success('Created', `"${formData.title}" added to posts.`);
 		}
 		modalOpen = false;
 	}
+	import type { PageData } from './$types';
+
+	let { data }: { data: PageData } = $props();
+
 </script>
 
 <div class="space-y-6">

@@ -4,7 +4,7 @@
 	import { generateBanners } from '$lib/data/mock';
 	import { Megaphone, Plus, Pencil, Eye, Calendar } from '@lucide/svelte';
 
-	let banners = $state<Banner[]>(generateBanners());
+	let banners = $state<Banner[]>(data.banners);
 
 	let isEditing = $state(false);
 	let modalOpen = $state(false);
@@ -68,19 +68,26 @@
 		if (isEditing) {
 			const idx = banners.findIndex((b) => b.id === form.id);
 			if (idx !== -1) {
+				clientApi.put(`/api/banners/${form.id}`, { body: form }).then(r => banners[idx] = r as any);
 				banners[idx] = { ...form };
 			}
 		} else {
-			banners.push({ ...form });
+			clientApi.post('/api/banners', { body: form }).then(r => banners.push(r as any));
 		}
 		modalOpen = false;
 	}
 
 	function deleteBanner(id: string) {
 		if (confirm('Are you sure you want to delete this banner?')) {
-			banners = banners.filter((b) => b.id !== id);
+			clientApi.delete(`/api/banners/${id}`).then(() => {
+				banners = banners.filter((b) => b.id !== id);
+			});
 		}
 	}
+	import type { PageData } from './$types';
+
+	let { data }: { data: PageData } = $props();
+
 </script>
 
 <div class="space-y-6 text-foreground">

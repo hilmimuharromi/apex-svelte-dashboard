@@ -3,7 +3,7 @@
 	import { APP_CONFIG } from '$lib/config';
 	import { enhance } from '$app/forms';
 
-	let email = $state('admin@apex.dev');
+	let email = $state('admin@miromi.id');
 	let password = $state('');
 	let remember = $state(true);
 	let loading = $state(false);
