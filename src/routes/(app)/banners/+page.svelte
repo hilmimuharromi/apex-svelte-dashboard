@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Card, Badge, Button, Input, Select, FormField, Modal, ImageUpload, StatCard } from '$lib/ui';
+	import { Card, Badge, Button, Input, Select, FormField, Modal, ImageUpload, StatCard, EmptyState } from '$lib/ui';
 	import type { Banner } from '$lib/types/catalog';
 	import { generateBanners } from '$lib/data/mock';
 	import { Megaphone, Plus, Pencil, Eye, Calendar } from '@lucide/svelte';
@@ -106,8 +106,8 @@
 	<!-- Card Grid -->
 	<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 		{#if sortedBanners.length === 0}
-			<div class="col-span-full py-12 text-center text-muted-foreground">
-				No banners found. Click "Add Banner" to create one.
+			<div class="col-span-full">
+				<EmptyState title="No banners found" description="Click 'Add Banner' to create one." />
 			</div>
 		{:else}
 			{#each sortedBanners as b (b.id)}

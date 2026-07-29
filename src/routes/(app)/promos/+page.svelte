@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Card, Badge, Button, Input, Select, FormField, Modal, StatCard, ProgressBar } from '$lib/ui';
+	import { Card, Badge, Button, Input, Select, FormField, Modal, StatCard, ProgressBar, EmptyState } from '$lib/ui';
 	import type { Promo } from '$lib/types/catalog';
 	import { generatePromos } from '$lib/data/mock';
 	import { money } from '$lib/utils';
@@ -113,8 +113,8 @@
 	<!-- Table / Card Grid -->
 	<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 		{#if promos.length === 0}
-			<div class="col-span-full py-12 text-center text-muted-foreground bg-card border border-border rounded-xl">
-				No promo codes found. Click "Add Promo" to create one.
+			<div class="col-span-full">
+				<EmptyState title="No promo codes found" description="Click 'Add Promo' to create one." />
 			</div>
 		{:else}
 			{#each promos as p (p.id)}
